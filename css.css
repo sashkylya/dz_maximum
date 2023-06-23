@@ -15,8 +15,13 @@ color: green;
     font-size: 24pt;
     padding: 100px 100px 100px 100px;
 }
-.paragraph-5{
-    color: azure;
-
-
+.paragraph-3{
+    color: rgb(180, 22, 22);
 }
+.paragraph-4{
+    font-size: 24px;
+    text-align: center;
+    font-style: italic;
+    color: green;
+    text-shadow: 1px 1px green;
+    }
