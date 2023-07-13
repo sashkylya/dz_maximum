@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,39 +10,38 @@
   <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/fontello.css">
-  <title>Login</title>
+  <title>Advertisement-post</title>
 </head>
 
 <body>
-
-
+  {% block content %}
   <ul class="nav nav-pills sticky-top bg-white nav-fill">
     <li class="nav-item">
-      <a class="nav-link" href="index.html">
+      <a class="nav-link" href="{% url '/' %}">
         <span style="font-weight: bold;">Главная</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="top-sellers.html"><span style="font-weight: bold;">Топ продавцов</span>
+      <a class="nav-link" href="{% url 'top' %}"><span style="font-weight: bold;">Топ продавцов</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="advertisement-post.html">
+      <a class="nav-link active" aria-current="page" href="{% url 'post' %}">
         <span style="font-weight: bold;">Разместить объявление</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="register.html">
+      <a class="nav-link" href="{% url 'reg' %}">
         <span style="font-weight: bold;">Регистрация</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link active" aria-current="page" href="login.html">
+      <a class="nav-link" href="{% url 'log' %}">
         <span style="font-weight: bold;">Войти</span>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="profile.html">
+      <a class="nav-link" href="{% url 'profile' %}">
         <span style="font-weight: bold;">Профиль</span>
       </a>
     </li>
@@ -50,18 +51,18 @@
       </a>
     </li>
   </ul>
-  <div class="container">
   <div class="row">
-    <div class="col-8" style="margin: 50px;">
+    <div class="col" style="margin: 50px;">
       <div class="display-2">
-        <span class="badge bg-primary">Страница авторизации пользователя</span>
+        <span class="badge bg-primary">Сообщите миру об этом в этой форме</span>
       </div>
     </div>
   </div>
+  <div class="container">
     <form method="post">
       <div class="row mb-3">
         <div class="col">
-          <label class="col-sm-4 col-form-label offset-4">Username</label>
+          <label class="col-sm-4 col-form-label offset-4">Title</label>
           <div class="col-sm-4 offset-4 w-25">
             <input type="text" class="form-control form-control-lg">
           </div>
@@ -69,9 +70,34 @@
       </div>
       <div class="row mb-3">
         <div class="col">
-          <label class="col-sm-4 col-form-label offset-4">Password</label>
+          <label class="col-sm-4 col-form-label offset-4">Description</label>
           <div class="col-sm-4 offset-4 w-25">
-            <input type="password" class="form-control form-control-lg">
+              <label for="" class="form-label"></label>
+              <textarea class="form-control" name="" id="" rows="3"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <label class="col-sm-4 col-form-label offset-4">Photo</label>
+          <div class="col-sm-4 offset-4 w-25">
+            <input type="file" class="form-control form-control-lg">
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <label class="col-sm-4 col-form-label offset-4">Price</label>
+          <div class="col-sm-4 offset-4 w-25">
+            <input type="text" class="form-control form-control-lg">
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <div class="offset-4 w-25">
+            <input type="checkbox" class="form-check-input">
+            <label class="form-check-label">Auction</label>
           </div>
         </div>
       </div>
@@ -82,6 +108,9 @@
       </div>
     </form>
   </div>
+  {% endblock %}
+
+  
   <script src="js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
