@@ -1,14 +1,35 @@
 from django.db import models
+from django.utils.html import format_html
+from django.contrib import admin
+
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Advertisement(models.Model):
-    title = models.CharField('Название', max_length=120)
-    descriptions = models.TextField('Описание')
-    price = models.DecimalField('Цена',max_digits=9,decimal_places=2)
-    trades = models.BooleanField('Торг',help_text='ЕСли хотим торговаться')
-    date_now = models.DateField('Создание дата', auto_now_add= True)
-    date_update = models.DateField('Обновление дата', auto_now= True)
+    title = models.CharField("название", max_length=120)
+    descriptions = models.TextField("описание")
+    price = models.DecimalField("цена", max_digits=9, decimal_places=2)
+    trades = models.BooleanField("Торг", help_text="Если хотим торговаться")
+    date_now = models.DateTimeField("Создание дата", auto_now_add=True)
+    date_update = models.DateTimeField("Обновление дата", auto_now=True)
+    image = models.ImageField("Картинка", upload_to='advertisments/')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
-    db_table = 'advertisements'
+    class Meta:
+        db_table = "Advertisment"
 
     def __str__(self):
-        return f'Advertisement(id={self.id}, title={self.title}, price={self.price})'
+        return self.title
+
+    @admin.display(description="Дата создания")
+    def created_date(self):
+        from django.utils import timezone
+        if self.date_now.date() == timezone.now().date():
+            created_time = self.date_now.time().strftime("%H:%M:%S")
+            return format_html('<span style="color:green; font-weight: bold;">Сегодня в {}</span>', created_time)
+        return self.date_now.strftime("%d.%m.%Y  в  %H:%M:%S")
+
+    @admin.display(description="картинка")
+    def image_thumbnail(self):
+        return format_html('<img src="{}" width="100" height="100" />', self.image.url)
