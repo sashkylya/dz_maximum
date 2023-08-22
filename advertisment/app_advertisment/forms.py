@@ -1,8 +1,19 @@
 from django import forms
+from .models import Advertisment
 
-class AdvertismentForm(forms.Form):
-    title = forms.CharField(max_length= 120,widget=forms.TextInput(attrs = {"class":"form-control form-control-lg"}))
-    descriptions = forms.CharField(widget=forms.Textarea(attrs = {"class":"form-control form-control-lg"}))
-    price = forms.DecimalField(widget=forms.NumberInput(attrs = {"class":"form-control form-control-lg"}))
-    trades = forms.BooleanField(required= False)
-    image = forms.ImageField(widget=forms.FileInput(attrs = {"class":"form-control form-control-lg"}))
+class AdvertismentForm(forms.ModelForm):
+    class Meta:
+        model = Advertisment
+        fields = ['title', 'descriptions', 'price', 'trades', 'image']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control form-control-lg'}),
+            'descriptions': forms.Textarea(attrs={'class': 'form-control form-control-lg'}),
+            'price': forms.NumberInput(attrs={'class': 'form-control form-control-lg'}),
+            'image': forms.FileInput(attrs={'class': 'form-control form-control-lg'}),
+        }
+
+    def clean_title(self):
+        title = self.cleaned_data['title']
+        if title.startswith('?'):
+            raise forms.ValidationError('Title cannot start with a question mark.')
+        return title
